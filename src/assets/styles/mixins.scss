@@ -1,0 +1,36 @@
+@mixin flexCenter($direction: row) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: $direction;
+}
+
+@mixin buttonStyle($bg, $color, $border: none) {
+  padding: 12px 30px;
+  font-family: $font-family-sans;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: $bg;
+  color: $color;
+  border: $border;
+
+  &:hover {
+    filter: brightness(0.9);
+    transform: translateY(-2px);
+  }
+}
+
+@mixin media-mobile {
+  @media (max-width: $breakpoint-mobile) {
+    @content;
+  }
+}
+
+@mixin media-tablet {
+  @media (max-width: $breakpoint-tablet) {
+    @content;
+  }
+}

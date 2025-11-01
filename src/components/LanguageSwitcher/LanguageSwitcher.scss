@@ -1,0 +1,17 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+
+.lang-switcher {
+  background-color: transparent;
+  color: $text-color;
+  border: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 5px;
+  margin-left: 10px;
+  appearance: none;
+
+  &:focus {
+    outline: none;
+  }
+}

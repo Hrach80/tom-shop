@@ -1,0 +1,381 @@
+
+$primary-color: #a8795b; 
+$secondary-color: #f7e0d3; 
+$accent-color: #481d1d; 
+$text-dark: #333;
+$text-light: #b1c5c8;
+$shadow-light: rgba(0, 0, 0, 0.1);
+$shadow-strong: rgba(0, 0, 0, 0.3);
+
+$heading-font: 'Playfair Display', serif;
+$body-font: 'Roboto', sans-serif; 
+
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 1.5rem;
+$spacing-xl: 2rem;
+
+@mixin mobile {
+    @media (max-width: 768px) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media (min-width: 769px) and (max-width: 1024px) {
+        @content;
+    }
+}
+
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes buttonPress {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 4px 8px $shadow-light;
+    }
+    50% {
+        transform: scale(0.98);
+        box-shadow: 0 2px 4px $shadow-light;
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 4px 8px $shadow-light;
+    }
+}
+
+
+.menu-page {
+    padding: $spacing-xl $spacing-md;
+    background-color: $secondary-color;
+    min-height: 100vh;
+    font-family: $body-font;
+    animation: fadeInUp 0.8s ease-out;
+
+    @include mobile {
+        padding: $spacing-lg $spacing-sm;
+    }
+}
+
+.menu-title {
+    font-family: $heading-font;
+    font-size: 2rem;
+    color: $primary-color;
+    text-align: center;
+    margin-bottom: $spacing-xl;
+    text-shadow: 1px 1px 3px $shadow-light;
+
+    @include mobile {
+        font-size: 2rem;
+        margin-bottom: $spacing-lg;
+    }
+}
+
+
+
+.category-tabs {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+    margin-bottom: $spacing-xl;
+
+    @include mobile {
+        gap: $spacing-sm;
+        margin-bottom: $spacing-lg;
+    }
+
+    .tab-btn {
+        background-color: $primary-color;
+        color: $text-light;
+        border: none;
+        padding: $spacing-sm $spacing-lg;
+        border-radius: 20px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px $shadow-light;
+
+        &:hover:not(.active) {
+            background-color: darken($primary-color, 10%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px $shadow-strong;
+        }
+        
+        &:active:not(.active) {
+            animation: buttonPress 0.3s ease;
+        }
+
+        &.active {
+            background-color: $accent-color;
+            transform: scale(1.05);
+            box-shadow: 0 4px 6px $shadow-strong;
+        }
+
+        @include mobile {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
+        }
+    }
+}
+
+
+
+.menu-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: $spacing-xl;
+    padding: 0 $spacing-lg;
+
+    @include tablet {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: $spacing-lg;
+    }
+
+    @include mobile {
+        grid-template-columns: 1fr;
+        gap: $spacing-lg;
+        padding: 0;
+    }
+
+    &.fade-out {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    &.fade-in {
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
+    }
+}
+
+
+.menu-item-container {
+    perspective: 1000px; 
+    height: 450px; 
+    opacity: 0;
+    animation: fadeInUp 0.5s ease-out forwards;
+
+    @include mobile {
+        height: 400px;
+    }
+
+    .menu-item-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); 
+        transform-style: preserve-3d;
+        box-shadow: 0 4px 8px $shadow-light;
+        border-radius: 12px;
+        
+        &:hover {
+            box-shadow: 0 8px 16px $shadow-strong;
+        }
+    }
+
+    &.flipped .menu-item-inner {
+        transform: rotateY(180deg);
+    }
+
+    .menu-item {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-backface-visibility: hidden; 
+        backface-visibility: hidden;
+        border-radius: 12px;
+        padding: $spacing-md;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .front {
+        background-color: $text-light;
+        color: $text-dark;
+        border: 1px solid lighten($primary-color, 20%);
+
+        .item-image-wrapper {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-bottom: $spacing-md;
+        }
+
+        .item-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+            &:hover {
+                transform: scale(1.1); 
+            }
+        }
+
+        .item-details {
+            text-align: left;
+        }
+
+        .item-title {
+            font-family: $heading-font;
+            font-size: 1.5rem;
+            color: $primary-color;
+            margin: 0 0 $spacing-sm 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .item-description {
+            font-size: 0.9rem;
+            color: $text-dark;
+            margin: 0 0 $spacing-md 0;
+            height: 2.7em;
+            overflow: hidden;
+            line-height: 1.35;
+        }
+
+        .item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: $spacing-sm;
+            border-top: 1px solid lighten($secondary-color, 5%);
+        }
+
+        .item-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: $accent-color;
+        }
+
+        .order-btn {
+            background-color: $primary-color;
+            color: $text-light;
+            border: none;
+            padding: 0.6rem $spacing-md;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+
+            &:hover {
+                background-color: darken($primary-color, 10%);
+                transform: translateY(-1px); 
+                box-shadow: 0 2px 4px $shadow-light;
+            }
+        
+            &:active {
+                animation: buttonPress 0.2s ease;
+                transform: translateY(0);
+            }
+        }
+    }
+
+    .back {
+        background-color: $primary-color;
+        color: $text-light;
+        transform: rotateY(180deg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: $spacing-lg;
+
+        .back-content {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-md;
+            width: 100%;
+            text-align: center;
+        }
+
+        .back-logo {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 5px $shadow-light);
+            margin: 0 auto $spacing-sm auto;
+        }
+
+        .back-title {
+            font-family: $heading-font;
+            font-size: 1.8rem;
+            margin: 0;
+            color: $secondary-color;
+        }
+
+        .back-message {
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .message-input {
+            width: 100%;
+            padding: $spacing-sm;
+            border: 1px solid $secondary-color;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: $text-dark;
+            resize: none;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+            
+            &:focus {
+                border-color: $accent-color; 
+                outline: none;
+            }
+        }
+
+        .send-btn, .cancel-btn {
+            padding: 0.7rem $spacing-md;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .send-btn {
+            background-color: $accent-color;
+            color: $text-light;
+
+            &:hover {
+                background-color: darken($accent-color, 10%);
+                transform: scale(1.02);
+            }
+            &:active {
+                animation: buttonPress 0.2s ease;
+            }
+        }
+
+        .cancel-btn {
+            background-color: $secondary-color;
+            color: $primary-color;
+
+            &:hover {
+                background-color: darken($secondary-color, 5%);
+                transform: scale(1.02); 
+            }
+            &:active {
+                animation: buttonPress 0.2s ease;
+            }
+        }
+    }
+}
