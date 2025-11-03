@@ -83,7 +83,6 @@ const AboutPage = () => {
                             data-aos="zoom-in"
                         />
                     </div>
-
                     <div className="hot-food-highlight">
                         <span>🔥 {t('MIX_HOT_FOOD_KHOROVATS')}</span>
                     </div>
