@@ -1,9 +1,12 @@
+// src/pages/SpecialOffers/SpecialOffers.jsx (ՈՒՂՂՎԱԾ ԿՈԴ)
+
 import React, { useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient.js";
 import { useLanguage } from "../../hooks/useLanguage.jsx";
 import CountdownTimer from "../../components/Offers/CountdownTimer.jsx";
+// ✅ ԱՎԵԼԱՑՎԱԾ Է GlobalLoader-ի ՆԵՐՄՈՒԾՈՒՄԸ
+import GlobalLoader from "../../components/Loader/GlobalLoader.jsx";
 import "./SpecialOffers.scss";
-
 import { FaTruck, FaGift, FaBirthdayCake } from "react-icons/fa";
 
 const offerCardsData = [
@@ -32,7 +35,6 @@ const SpecialOffers = () => {
     const [offer, setOffer] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // --- 🔹 Տվյալների ստացում Supabase-ից ---
     useEffect(() => {
         const fetchOffer = async () => {
             setLoading(true);
@@ -44,29 +46,32 @@ const SpecialOffers = () => {
 
             if (error) {
                 console.error("Fetch error:", error);
-            } else {
-                setOffer(data);
-                // 🔸 Եթե ժամկետը լրացել է՝ ջնջում ենք
-                if (data && new Date(data.target_date) < new Date()) {
-                    await supabase.from("special_offers_config").delete().eq("id", 1);
+                setOffer(null);
+            } else if (data) {
+                if (new Date(data.target_date) < new Date()) {
+                    console.log("Ակցիայի ժամկետը լրացել է:", data.target_date);
                     setOffer(null);
+                } else {
+                    setOffer(data);
                 }
+            } else {
+                setOffer(null);
             }
             setLoading(false);
         };
 
         fetchOffer();
-
-        // Optional: Auto-refresh (յուրաքանչյուր 1 րոպե)
+        // Ակցիաների ստուգում ամեն 60 վայրկյանը մեկ
         const interval = setInterval(fetchOffer, 60000);
         return () => clearInterval(interval);
     }, []);
 
+    // ------------------- ՑՈՒՑԱԴՐՈՒՄ -------------------
+
     if (loading) {
         return (
-            <section className="special-offers-page">
-                <p className="loading-text">{t("LOADING")}...</p>
-            </section>
+            // ✅ Փոխարինել ենք հասարակ տեքստը GlobalLoader-ով
+            <GlobalLoader />
         );
     }
 
@@ -96,7 +101,7 @@ const SpecialOffers = () => {
                     <p className="pre-title">{t("OFFER_PRE_TITLE_HERO")}</p>
                     <h2 className="offer-slogan">{t("OFFER_SLOGAN_HERO")}</h2>
 
-                    <p className="discount-tag">
+                    <p className="discount-tag">SALLE <br />
                         {offer.discount_percentage
                             ? `-${offer.discount_percentage}%`
                             : t("SPECIAL_DISCOUNT")}
@@ -104,7 +109,10 @@ const SpecialOffers = () => {
 
                     <div className="timer-wrapper">
                         <p className="timer-text">{t("OFFER_TIMER_TEXT")}</p>
-                        <CountdownTimer targetDate={offer.target_date} />
+                        <CountdownTimer
+                            targetDate={offer.target_date}
+                            t={t}
+                        />
                     </div>
 
                     <a href="/menu" className="cta-button">
@@ -113,22 +121,7 @@ const SpecialOffers = () => {
                 </div>
             </div>
 
-            <div className="offer-cards-grid">
-                {offerCardsData.map((card, index) => {
-                    const Icon = card.icon;
-                    return (
-                        <div
-                            key={index}
-                            className="offer-card interactive-hover"
-                            style={{ "--card-color": card.color }}
-                        >
-                            <Icon className="offer-card-icon" />
-                            <h3>{t(card.titleKey)}</h3>
-                            <p>{t(card.descKey)}</p>
-                        </div>
-                    );
-                })}
-            </div>
+
         </section>
     );
 };

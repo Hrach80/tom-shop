@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-// import './CountdownTimer.scss'; // Ավելացրեք SCSS ֆայլ, եթե ցանկանում եք ոճավորում
 
 const calculateTimeLeft = (targetDate) => {
     const difference = +new Date(targetDate) - +new Date();
     let timeLeft = {};
 
-    if (difference > 1000) { // Պաշտպանություն՝ որպեսզի չշարունակի հաշվել
+    if (difference > 1000) {
         timeLeft = {
             days: Math.floor(difference / (1000 * 60 * 60 * 24)),
             hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
@@ -16,17 +15,8 @@ const calculateTimeLeft = (targetDate) => {
     return timeLeft;
 };
 
-const CountdownTimer = ({ targetDate }) => {
+const CountdownTimer = ({ targetDate, t }) => {
     const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(targetDate));
-
-    // Հայերեն թարգմանությունները ժամանակաչափի համար
-    const labels = {
-        days: 'Օր',
-        hours: 'Ժամ',
-        minutes: 'Րոպե',
-        seconds: 'Վրկ',
-    };
-
     useEffect(() => {
         const timer = setInterval(() => {
             const newTimeLeft = calculateTimeLeft(targetDate);
@@ -39,14 +29,17 @@ const CountdownTimer = ({ targetDate }) => {
 
         return () => clearInterval(timer);
     }, [targetDate]);
-
     const timerComponents = Object.keys(timeLeft).map((interval) => {
         const value = String(timeLeft[interval]).padStart(2, '0');
+        const translationKey = interval.toUpperCase() + '_LABEL';
 
         return (
             <span key={interval} className="timer-unit">
                 <span className="timer-value">{value}</span>
-                <span className="timer-label">{labels[interval] || interval}</span>
+
+                <span className="timer-label">
+                    {t ? t(translationKey) : interval}
+                </span>
             </span>
         );
     });
@@ -56,7 +49,7 @@ const CountdownTimer = ({ targetDate }) => {
             {timerComponents.length ? (
                 timerComponents
             ) : (
-                <span className="expired-message">Առաջարկն Ավարտված է!</span>
+                <span className="expired-message">{t ? t("OFFER_EXPIRED") : "Առաջարկն Ավարտված է!"}</span>
             )}
         </div>
     );

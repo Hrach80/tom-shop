@@ -1,6 +1,6 @@
 
-$primary-color: #a8795b; 
-$secondary-color: #f7e0d3; 
+$primary-color: #66025f; 
+$secondary-color: rgb(242, 213, 242); 
 $accent-color: #481d1d; 
 $text-dark: #333;
 $text-light: #b1c5c8;
@@ -65,6 +65,13 @@ $spacing-xl: 2rem;
     @include mobile {
         padding: $spacing-lg $spacing-sm;
     }
+}.menu-loader-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 40vh;
+    width: 100%;
+    margin: 50px 0;
 }
 
 .menu-title {
@@ -297,19 +304,21 @@ $spacing-xl: 2rem;
         align-items: center;
         justify-content: center;
         padding: $spacing-lg;
-
         .back-content {
             display: flex;
             flex-direction: column;
             gap: $spacing-md;
             width: 100%;
             text-align: center;
+        
+            
+        
         }
 
         .back-logo {
-            width: 60px;
+        width: 60px;
             height: 60px;
-            object-fit: contain;
+            border-radius: 25%;
             filter: drop-shadow(0 0 5px $shadow-light);
             margin: 0 auto $spacing-sm auto;
         }
@@ -378,4 +387,5 @@ $spacing-xl: 2rem;
             }
         }
     }
+    
 }

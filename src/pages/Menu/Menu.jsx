@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useMemo } from 'react'; // Ավելացրել ենք useMemo-ն
-import { useLanguage } from '../../hooks/useLanguage.jsx';
-// import { menuData } from '../../data/menuData.js'; // ❌ ՋՆՋԵԼ: Այլևս պետք չէ
-import { supabase } from '../../supabaseClient.js'; // ✅ Ավելացնել Supabase-ի ինտեգրումը (Ճանապարհը կարող է տարբերվել)
+// src/pages/Menu/Menu.jsx (ՈՒՂՂՎԱԾ ԿՈԴ)
 
-import './Menu.scss';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useLanguage } from '../../hooks/useLanguage.jsx';
+import { supabase } from '../../supabaseClient.js';
 import logo from '/images/logo.png';
+import ClockSpinner from '../../components/Loader/ClockSpinner.jsx';
+import './Menu.scss';
+
 
 const Menu = () => {
     const { t, lang } = useLanguage();
-
-    // ✅ ՆՈՐ STATE: Պահելու ենք Supabase-ից եկած բոլոր ապրանքները
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [fetchError, setFetchError] = useState(null);
@@ -19,20 +19,18 @@ const Menu = () => {
     const [flippedCardId, setFlippedCardId] = useState(null);
     const [orderMessage, setOrderMessage] = useState('');
 
-    // ------------------- Supabase-ից Տվյալների Բեռնում -------------------
-
     const fetchProducts = async () => {
         setLoading(true);
         const { data, error } = await supabase
             .from('products')
             .select(`
-                id, 
-                price, 
-                image_url, 
-                category, category_hy, category_ru, category_nl, 
-                title_hy, title_en, title_ru, title_nl, 
-                description_hy, description_en, description_ru, description_nl
-            `) // ❌ Մեկնաբանությունը հեռացված է այս հատվածից
+                id, 
+                price, 
+                image_url, 
+                category, category_hy, category_ru, category_nl, 
+                title_hy, title_en, title_ru, title_nl, 
+                description_hy, description_en, description_ru, description_nl
+            `)
             .order('created_at', { ascending: false });
 
         if (error) {
@@ -40,7 +38,6 @@ const Menu = () => {
             setLoading(false);
             console.error(error);
         } else {
-            // ✅ Փոխարինել menuData-ն products-ով
             setProducts(data);
             setLoading(false);
             setFetchError(null);
@@ -52,20 +49,16 @@ const Menu = () => {
         setAnimateClass('fade-in');
     }, []);
 
-    // ------------------- ԿԱՏԵԳՈՐԻԱՆԵՐԻ ԴԻՆԱՄԻԿ ՍՏԱՑՈՒՄ -------------------
 
-    // ✅ useMemo-ն կանխում է category list-ի անիմաստ վերահաշվարկը
     const categories = useMemo(() => {
         const uniqueCategories = Array.from(new Set(products.map(item => item.category)));
 
-        // Ստեղծում ենք Categories զանգվածը
         const cats = uniqueCategories.map(cat => {
             const item = products.find(i => i.category === cat);
             const labelKey = `category_${lang}`;
 
             return {
                 key: cat,
-                // Օգտագործում ենք դինամիկ լեյբլը, հակառակ դեպքում՝ ընդհանուր category դաշտը
                 label: item ? (item[labelKey] || item.category) : cat
             };
         });
@@ -76,14 +69,11 @@ const Menu = () => {
         ];
     }, [products, lang, t]);
 
-    // ------------------- ՖԻԼՏՐԱՑԻԱՅԻ ԼՈԳԻԿԱ -------------------
 
     const filteredItems = selectedCategory === 'all'
-        ? products // ❌ Փոխարինել menuData-ն products-ով
+        ? products
         : products.filter(item => item.category === selectedCategory);
 
-    // ------------------- ՄՆԱՑԱԾ ՖՈՒՆԿՑԻԱՆԵՐԸ -------------------
-    // ... (handleCategoryChange, getTitle, getDescription, sendWhatsAppOrder, handleFlip մնում են նույնը)
 
     const handleCategoryChange = (category) => {
         setAnimateClass('fade-out');
@@ -104,7 +94,7 @@ const Menu = () => {
         let message = `*${t('FLIP_CARD_TITLE') || 'New Order Request'}*\n`;
         message += `------------------------\n`;
         message += `${t('MENU') || 'Product'}: ${itemName} (${item.category})\n`;
-        message += `${t('ORDER_NOW') || 'Price'}: ${item.price.toLocaleString()} AMD\n`;
+        message += `${t('ORDER_NOW') || 'Price'}: ${item.price.toLocaleString()} euro\n`;
         message += `\n${t('FLIP_CARD_MESSAGE') || 'Special Request'}:\n${orderMessage || t('NO_MESSAGE_PROVIDED') || 'No additional request provided.'}\n`;
 
         const encodedMessage = encodeURIComponent(message);
@@ -120,16 +110,20 @@ const Menu = () => {
     };
 
 
-    // ------------------- ՑՈՒՑԱԴՐՈՒՄ -------------------
-
     if (loading) {
-        return <section className="menu-page"><p className="loading-text">Բեռնվում են ապրանքները...</p></section>;
+        return (
+            <section className="menu-page">
+                <h1 className="menu-title">{t('MENU_TITLE') || 'Our Sweets Collection'}</h1>
+                <div className="menu-loader-wrapper">
+                    <ClockSpinner t={t} />
+                </div>
+            </section>
+        );
     }
 
     if (fetchError) {
         return <section className="menu-page"><p className="error-text" style={{ color: 'red' }}>Սխալ տվյալների բեռնման ժամանակ: {fetchError}</p></section>;
     }
-
 
     return (
         <section className="menu-page">
@@ -156,7 +150,6 @@ const Menu = () => {
                         <div className="menu-item-inner">
                             <div className="menu-item front">
                                 <div className="item-image-wrapper">
-                                    {/* ❌ Փոխարինել item.img-ն item.image_url-ով */}
                                     <img src={item.image_url} alt={getTitle(item)} className="item-image" />
                                 </div>
                                 <div className="item-details">
@@ -176,7 +169,6 @@ const Menu = () => {
                                     </div>
                                 </div>
                             </div>
-                            {/* ... ՄՆԱՑԱԾ BACK ՏԵՂԱԴՐՈՒՄԸ ՆՈՒՅՆՆ Է ... */}
                             <div className="menu-item back">
                                 <div className="back-content">
                                     <img src={logo} alt="Logo" className="back-logo" />

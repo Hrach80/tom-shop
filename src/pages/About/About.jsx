@@ -39,7 +39,7 @@ const AboutPage = () => {
                     <p className="menu-info">{t('KAREN_MENU')}</p>
                     <div className="media-gallery">
                         <img
-                            src="/images/karen.png"
+                            src="/images/kat.png"
                             alt="Catering Event"
                             className="gallery-item"
                             data-aos="zoom-in"

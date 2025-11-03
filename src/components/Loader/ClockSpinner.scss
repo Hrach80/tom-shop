@@ -1,0 +1,118 @@
+
+$neon-pink: #ff007f;
+$neon-shadow: 0 0 5px $neon-pink, 0 0 10px $neon-pink, 0 0 20px rgba(255, 0, 127, 0.5);
+$bg-color: #12001f; 
+
+.clock-spinner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.clock-face {
+    width: 100px;
+    height: 100px;
+    border: 4px solid $neon-pink;
+    border-radius: 50%;
+    position: relative;
+    background: $bg-color;
+    box-shadow: $neon-shadow, inset 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.center-dot {
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    box-shadow: 0 0 8px #fff, 0 0 15px $neon-pink;
+}
+
+.hand {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform-origin: bottom center;
+    background: $neon-pink;
+    border-radius: 2px;
+    box-shadow: $neon-shadow;
+}
+
+.hour-hand {
+    width: 4px;
+    height: 30px;
+    animation: rotate-hour 6s linear infinite;
+    z-index: 3;
+}
+
+.minute-hand {
+    width: 3px;
+    height: 40px;
+    animation: rotate-minute 3s linear infinite;
+    z-index: 5;
+}
+
+.second-hand {
+    width: 2px;
+    height: 45px;
+    background: lighten($neon-pink, 10%);
+    animation: rotate-second 1s linear infinite;
+    z-index: 7;
+}
+
+.loading-text-spinner {
+    margin-top: 25px;
+    color: $neon-pink;
+    font-size: 18px;
+    letter-spacing: 2px;
+    text-shadow: $neon-shadow;
+    animation: pulse-text 1.5s infinite alternate;
+}
+
+@keyframes rotate-second {
+    from {
+        transform: translate(-50%, 0) rotate(0deg);
+    }
+
+    to {
+        transform: translate(-50%, 0) rotate(360deg);
+    }
+}
+
+@keyframes rotate-minute {
+    from {
+        transform: translate(-50%, 0) rotate(0deg);
+    }
+
+    to {
+        transform: translate(-50%, 0) rotate(360deg);
+    }
+}
+
+@keyframes rotate-hour {
+    from {
+        transform: translate(-50%, 0) rotate(0deg);
+    }
+
+    to {
+        transform: translate(-50%, 0) rotate(360deg);
+    }
+}
+
+@keyframes pulse-text {
+    0% {
+        opacity: 0.6;
+        text-shadow: 0 0 3px $neon-pink;
+    }
+
+    100% {
+        opacity: 1;
+        text-shadow: $neon-shadow;
+    }
+}
