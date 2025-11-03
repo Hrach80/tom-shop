@@ -13,6 +13,7 @@ body {
   color: $text-color;
   background-color: $bg-light;
   overflow-x: hidden;
+  background-color: rgb(242, 213, 242);
 }
 
 h1,
@@ -39,4 +40,23 @@ a {
   @include media-mobile {
     font-size: 2rem;
   }
+}
+/* Global.scss-ում կամ այլ գլոբալ ոճերում */
+
+.global-loader-overlay {
+  position: fixed;
+  /* Ամրացնում է այն էկրանին */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(20, 0, 30, 0.85);
+  /* Մուգ կիսաթափանցիկ ֆոն */
+  backdrop-filter: blur(3px);
+  /* Թողնում է տակի բովանդակությունը մի փոքր երևա */
+  z-index: 9999;
+  /* Ապահովում է, որ այն լինի բոլորի վերևում */
 }

@@ -39,7 +39,7 @@ const AboutPage = () => {
                     <p className="menu-info">{t('KAREN_MENU')}</p>
                     <div className="media-gallery">
                         <img
-                            src="/images/karen.png"
+                            src="/images/kat.png"
                             alt="Catering Event"
                             className="gallery-item"
                             data-aos="zoom-in"
@@ -83,7 +83,6 @@ const AboutPage = () => {
                             data-aos="zoom-in"
                         />
                     </div>
-
                     <div className="hot-food-highlight">
                         <span>🔥 {t('MIX_HOT_FOOD_KHOROVATS')}</span>
                     </div>

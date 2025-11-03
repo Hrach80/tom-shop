@@ -1,10 +1,8 @@
 
-
 import React from 'react';
 import { useLanguage } from '../../hooks/useLanguage.jsx';
 import '../Contact/Contact.scss';
 
-// --- REACT ICONS ՆԵՐՄՈՒԾՈՒՄՆԵՐԸ ---
 import {
     FaPhoneAlt,
     FaEnvelope,

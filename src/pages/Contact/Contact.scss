@@ -1,96 +1,88 @@
-
-
 // --- Variables and Mixins ---
-$primary-color: #8e4d57; 
-$secondary-color: #f7e0d3; 
-$accent-color: #e0ac9e; 
-$gold-color: #d4a968; 
-$text-dark: #3a3a3a; 
-$text-light: #c5e4e3;
-$shadow-subtle: rgba(0, 0, 0, 0.05); 
-$shadow-stronger: rgba(0, 0, 0, 0.15); 
-
-// Font Stacks 🖋️
+$primary-color: #8e4d57;
+$secondary-color: rgb(242, 213, 242);
+$accent-color: #b94423;
+$gold-color: #a56a11;
+$text-dark: #3a3a3a;
+$text-light: #42aca9;
+$shadow-subtle: rgba(0, 0, 0, 0.05);
+$shadow-stronger: rgba(0, 0, 0, 0.15);
 $heading-font: 'Playfair Display', serif;
 $body-font: 'Roboto', sans-serif;
-
-// Spacing
 $spacing-xs: 0.3rem;
 $spacing-sm: 0.6rem;
 $spacing-md: 1rem;
 $spacing-lg: 1.8rem;
 $spacing-xl: 2.5rem;
-$spacing-xxl: 4rem; 
+$spacing-xxl: 4rem;
 
-// Mixins
 @mixin mobile {
     @media (max-width: 768px) {
         @content;
     }
 }
+
 @mixin transition-ease {
-    transition: all 0.35s ease; 
+    transition: all 0.35s ease;
 }
+
 @mixin minimal-card {
     background-color: $text-light;
     border-radius: 12px;
-    box-shadow: 0 2px 10px $shadow-subtle; 
-    border: 1px solid lighten($accent-color, 10%); 
+    box-shadow: 0 2px 10px $shadow-subtle;
+    border: 1px solid lighten($accent-color, 10%);
     @include transition-ease;
 }
 
-
-// --- Keyframes (ԱՆԻՄԱՑԻԱՆԵՐ) ---
-
-// Էջի ներբեռնում
 @keyframes fadeIn {
     to {
         opacity: 1;
     }
 }
-// Բովանդակության թռիչք ներքևից
+
 @keyframes slideUp {
     to {
         transform: translateY(0);
         opacity: 1;
     }
 }
-// Կարգախոսի անիմացիա
+
 @keyframes slideIn {
     to {
         transform: translateY(0);
         opacity: 1;
     }
 }
-// Քարտեզի ցանցի հորիզոնական անիմացիաներ
+
 @keyframes slideRight {
     to {
         transform: translateX(0);
         opacity: 1;
     }
 }
+
 @keyframes slideLeft {
     to {
         transform: translateX(0);
         opacity: 1;
     }
 }
-// Հասցեի Իկոնկայի Թրթռում
+
 @keyframes pulse {
     0% {
         transform: scale(1);
     }
+
     50% {
         transform: scale(1.05);
         opacity: 0.8;
     }
+
     100% {
         transform: scale(1);
     }
 }
 
-
-// --- Ընդհանուր Կոնտակտ Էջի Ոճավորում ---
 
 .contact-page {
     padding: $spacing-xl 0 $spacing-xxl;
@@ -98,16 +90,14 @@ $spacing-xxl: 4rem;
     min-height: 100vh;
     font-family: $body-font;
     color: $text-dark;
-    
-    // Էջի անիմացիա
     opacity: 0;
     animation: fadeIn 1s ease-out forwards;
-    
-    & > * {
+
+    &>* {
         max-width: 1300px;
         margin-left: auto;
         margin-right: auto;
-        padding: 0 $spacing-md; 
+        padding: 0 $spacing-md;
     }
 
     @include mobile {
@@ -123,7 +113,7 @@ $spacing-xxl: 4rem;
     margin-bottom: $spacing-xl;
     font-weight: 500;
     letter-spacing: 1px;
-    
+
     &::after {
         content: '';
         display: block;
@@ -156,22 +146,18 @@ h3 {
 }
 
 
-// --- 1. ՀԻՄՆԱԴԻՐԸ և ԿԱՐԳԱԽՈՍԸ ---
-
 .founder-section {
     display: grid;
-    grid-template-columns: 1fr 1fr; 
+    grid-template-columns: 1fr 1fr;
     gap: $spacing-lg;
     align-items: center;
     padding: $spacing-lg;
     margin-bottom: $spacing-xxl;
     @include minimal-card;
-    
-    // ԱՆԻՄԱՑԻԱ: Թռիչք ներքևից
     transform: translateY(20px);
     opacity: 0;
     animation: slideUp 1s ease-out 0.3s forwards;
-    
+
     @include mobile {
         grid-template-columns: 1fr;
         padding: $spacing-md;
@@ -195,9 +181,10 @@ h3 {
         height: auto;
         margin: 0 auto $spacing-sm;
         display: block;
-        
+
         // ԻՆՏԵՐԱԿՏԻՎՈՒԹՅՈՒՆ
         @include transition-ease;
+
         &:hover {
             transform: scale(1.05);
         }
@@ -237,14 +224,13 @@ h3 {
             font-size: 1.1rem;
         }
     }
-    
+
     .animate-slogan {
         animation: slideIn 1.2s ease-out forwards;
         transform: translateY(10px);
         opacity: 0;
     }
-    
-    // ՈւՂՂԱԿԻ ԿԱՊԻ ՏԱՐՐԵՐ
+
     .contact-details {
         display: flex;
         flex-direction: column;
@@ -257,19 +243,20 @@ h3 {
             align-items: center;
             gap: $spacing-md;
             font-size: 1rem;
-            
+
             svg {
-                color: $primary-color; 
+                color: $primary-color;
                 font-size: 1.3rem;
-                // ԻՆՏԵՐԱԿՏԻՎՈՒԹՅՈՒՆ
                 @include transition-ease;
+
                 &:hover {
                     transform: rotate(5deg) scale(1.1);
                     color: $gold-color;
                 }
             }
 
-            a, p {
+            a,
+            p {
                 color: $text-dark;
                 text-decoration: none;
                 margin: 0;
@@ -285,7 +272,6 @@ h3 {
 }
 
 
-// --- 2. ԳՈՒԳԼ ՄԱՓՍԸ և ՀԱՍՑԵՆ՝ ԿՈՂՔ ԿՈՂՔԻ ---
 
 .map-and-address-section {
     margin-bottom: $spacing-xxl;
@@ -295,26 +281,28 @@ h3 {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: $spacing-lg;
-    height: 380px; 
-    
+    height: 380px;
+
     .address-card {
         transform: translateX(-20px);
         opacity: 0;
         animation: slideRight 1s ease-out 0.5s forwards;
     }
+
     .map-container {
         transform: translateX(20px);
         opacity: 0;
         animation: slideLeft 1s ease-out 0.5s forwards;
     }
-    
+
     @include mobile {
         grid-template-columns: 1fr;
         height: auto;
         gap: $spacing-md;
 
-        .address-card, .map-container {
-            transform: none; 
+        .address-card,
+        .map-container {
+            transform: none;
             animation: slideUp 1s ease-out 0.5s forwards;
         }
     }
@@ -338,19 +326,18 @@ h3 {
 
     .address-card {
         padding: $spacing-lg;
-        @include minimal-card; 
+        @include minimal-card;
         display: flex;
         flex-direction: column;
-        align-items: flex-start; 
+        align-items: flex-start;
         text-align: left;
         justify-content: center;
-        
+
         .address-icon-large {
             font-size: 2.5rem;
             color: $primary-color;
             margin-bottom: $spacing-sm;
-            // ԱՆԻՄԱՑԻԱ: Իկոնկան թեթև շնչում է
-            animation: pulse 3s infinite ease-in-out; 
+            animation: pulse 3s infinite ease-in-out;
         }
 
         h4 {
@@ -369,7 +356,7 @@ h3 {
         }
 
         .direction-btn {
-            background-color: transparent; 
+            background-color: transparent;
             color: $primary-color;
             border: 1px solid $primary-color;
             padding: $spacing-sm $spacing-md;
@@ -389,17 +376,13 @@ h3 {
     }
 }
 
-
-// --- 3. ԻՆՏԵՐԱԿՏԻՎ ՏԱՐՐԵՐԻ ԸՆԴՀԱՆՈՒՐ ՈՃԱՎՈՐՈՒՄ ---
-
-// Ընդհանուր hover-ը կիրառվում է լոգոների վրա և այլ տեղեր
 .interactive-hover {
     @include transition-ease;
     cursor: pointer;
 
     &:hover {
-        box-shadow: 0 4px 20px $shadow-subtle; 
-        transform: translateY(-2px); 
+        box-shadow: 0 4px 20px $shadow-subtle;
+        transform: translateY(-2px);
     }
 }
 
@@ -408,7 +391,7 @@ h3 {
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: $spacing-md;
     margin-bottom: $spacing-xxl;
-    
+
     .social-icon-link {
         display: flex;
         flex-direction: column;
@@ -416,27 +399,21 @@ h3 {
         padding: $spacing-md;
         @include minimal-card;
         text-decoration: none;
-        
-        border-bottom: 3px solid var(--icon-color); 
-        
-        // ԱՆԻՄԱՑԻԱ: Թռիչք ներքևից
+        border-bottom: 3px solid var(--icon-color);
         opacity: 0;
         animation: slideUp 0.8s ease-out forwards;
-        animation-delay: 0.1s; // Ընդհանուր դելեյս
+        animation-delay: 0.1s;
 
-        // --- ՍՈՑԻԱԼԱԿԱՆ ՑԱՆՑԵՐԻ ՎԵՐԱԿԱՆԳՆՎԱԾ HOVER ԷՖԵԿՏԸ ---
         &:hover {
-            transform: translateY(-5px); 
-            box-shadow: 0 8px 25px $shadow-stronger; 
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px $shadow-stronger;
         }
-        
+
         .social-icon {
             font-size: 2.2rem;
             margin-bottom: $spacing-xs;
             color: var(--icon-color);
             @include transition-ease;
-
-            // ԻՆՏԵՐԱԿՏԻՎՈՒԹՅՈՒՆ
             &:hover {
                 transform: scale(1.1);
             }
@@ -463,8 +440,6 @@ h3 {
     gap: $spacing-lg;
     padding: $spacing-md;
     @include minimal-card;
-    
-    // ԱՆԻՄԱՑԻԱ: Փոքր ֆեյդին
     opacity: 0;
     animation: fadeIn 1s ease-out 0.8s forwards;
 
@@ -475,17 +450,17 @@ h3 {
         filter: grayscale(80%);
         opacity: 0.7;
         @include transition-ease;
-        @extend .interactive-hover; 
+        @extend .interactive-hover;
 
         &:hover {
             filter: grayscale(0%);
             opacity: 1;
             transform: scale(1.02);
-            box-shadow: 0 4px 15px $shadow-subtle; 
+            box-shadow: 0 4px 15px $shadow-subtle;
         }
 
         @include mobile {
             max-width: 90px;
         }
-    }  
+    }
 }

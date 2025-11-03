@@ -7,6 +7,8 @@ import Home from './pages/Home/Home';
 import SpecialOffers from './pages/SpecialOffers/SpecialOffers';
 import Menu from './pages/Menu/Menu';
 import AboutPage from './pages/About/About';
+import GlobalLoader from './components/Loader/GlobalLoader';
+import Footer from './components/Footer/Footer';
 
 const App = () => {
   return (
@@ -14,15 +16,17 @@ const App = () => {
       <Router>
         <Header />
         <main>
+          <GlobalLoader>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/menu" element={<Menu />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/offers" element={<SpecialOffers />} />
             <Route path="/About" element={<AboutPage />} />
-          </Routes>
+            </Routes>
+          </GlobalLoader>
         </main>
-        {/* <Footer /> */}
+         <Footer /> 
       </Router>
     </LanguageProvider>
   );

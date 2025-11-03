@@ -1,17 +1,56 @@
-@import '../../assets/styles/variables';
-@import '../../assets/styles/mixins';
+
+$primary-light-blue: #e0f7fa;
+$accent-pink: #d81b60; 
+$text-dark: #333;
+$text-light: #fff;
+$shadow-color: rgba(0, 0, 0, 0.15);
+$border-color: #b3e5fc; 
+$transition-speed: 0.3s;
 
 .lang-switcher {
-  background-color: transparent;
-  color: $text-color;
-  border: none;
-  font-size: 0.9rem;
-  cursor: pointer;
-  padding: 5px;
-  margin-left: 10px;
+  -webkit-appearance: none; 
+  -moz-appearance: none;
   appearance: none;
 
+  background-color: $primary-light-blue;
+  color: $accent-pink;
+  border: 2px solid $accent-pink; 
+
+  padding: 0.5rem 1.5rem 0.5rem 0.8rem; 
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px $shadow-color;
+  outline: none;
+  position: relative;
+  z-index: 10;
+  transition: all $transition-speed ease-in-out;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20d%3D%22M9.293%2012.95l.707.707L15.657%208l-1.414-1.414L10%2010.828%205.757%206.586%204.343%208z%22%20fill%3D%22%23d81b60%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 1em; 
+  &:hover {
+    background-color: $accent-pink; 
+    color: $text-light; 
+    border-color: $primary-light-blue; 
+    box-shadow: 0 8px 15px rgba($accent-pink, 0.4); 
+    transform: translateY(-2px); 
+  }
+
   &:focus {
-    outline: none;
+    border-color: $primary-light-blue;
+    box-shadow: 0 0 0 3px rgba($accent-pink, 0.5);
+  }
+
+  option {
+    background-color: $text-light;
+    color: $text-dark;
+    padding: 0.5rem;
+  }
+
+  @media (max-width: 600px) {
+    font-size: 0.9rem;
+    padding: 0.4rem 1.3rem 0.4rem 0.6rem;
   }
 }
