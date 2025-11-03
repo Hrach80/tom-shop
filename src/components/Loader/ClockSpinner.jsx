@@ -15,5 +15,4 @@ const ClockSpinner = () => {
         </div>
     );
 };
-
 export default ClockSpinner;

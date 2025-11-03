@@ -14,7 +14,6 @@ const navItems = [
 const Header = () => {
     const { t } = useLanguage();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-
     return (
         <header className="main-header">
             <nav className="navbar">
